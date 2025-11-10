@@ -80,4 +80,48 @@ List<Map<String, dynamic>> listContent = [];
       );
     }
   }
+  deleteAccount(String id) async {
+    // Busca os dados existentes no Gist (lista de contas)
+    List<Account> listAccounts = await getAll();
+
+    // Remove a conta com o ID especificado
+    listAccounts.removeWhere((account) => account.id == id);
+
+    List<Map<String, dynamic>> listContent = [];
+    for (Account account in listAccounts) {
+      listContent.add(account.toMap());
+    } // Converte cada conta em Map e adiciona à nova lista
+
+    String content = json.encode(listContent);  // Converte a lista de Maps em JSON (String)
+
+    // Envia os novos dados via POST (GitHub API)
+    Response response = await post(
+      Uri.parse(url),
+      headers: {
+        // Usa o token pessoal para autenticação no GitHub
+        "Authorization": "Bearer $githubApiKey",
+      },
+      body: json.encode({
+        // Define a estrutura exigida pela API do GitHub
+        "description": "Accounts.json",
+        "public": true,
+        "files": {
+          "accounts.json": {
+            "content": content, // Aqui vai o novo conteúdo do arquivo JSON
+          },
+        },
+      }),
+    );
+
+    // Se o status code começar com "2" (ex: 200, 201), significa sucesso
+    if (response.statusCode.toString()[0] == "2") {
+      _streamController.add(
+        "${DateTime.now()} - Dados deletados (ID: ${id})",
+      );
+    } else {
+      _streamController.add(
+        "${DateTime.now()} - Erro ao deletar dados (status: ${response.statusCode} ID: ${id})",
+      );
+    }
+}
 }

@@ -19,6 +19,7 @@ class AccountScreen {
       print("O que você gostaria de fazer?");
       print("1 - Ver todas as contas");
       print("2 - Adicionar uma nova conta");
+      print("3 - Deletar uma conta");
       print("0 - Sair");
 
       String? input = stdin.readLineSync();
@@ -48,6 +49,12 @@ class AccountScreen {
             );
              await _accountServices.addAccount(newAccount);
             break;
+            case "3": 
+            print("Deletar uma conta.");
+            print("Digite o id da conta a ser deletada:");
+            String? deleteId = stdin.readLineSync();
+            await _accountServices.deleteAccount(deleteId ?? ''); // Deleta a conta com o id fornecido           
+            break;            
           case "0":
             running = false;
             print("Até mais!");
