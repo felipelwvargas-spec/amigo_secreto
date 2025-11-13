@@ -5,7 +5,7 @@ class Account {
   final String name;
   final String lastName;
   final double balance;
-  final String accountType;
+  final String? accountType; 
 
   Account({
     required this.id,
@@ -22,7 +22,7 @@ class Account {
       name: map['name'] as String,
       lastName: map['lastName'] as String,
       balance: map['balance'] as double,
-      accountType: map['accountType'] as String,
+      accountType:(map['accountType'] != null) ? map['accountType'] as String : null,
     );
   }
 
