@@ -5,6 +5,7 @@ import 'package:http/http.dart'; // Para fazer requisições HTTP (get, post, et
 import 'dart:convert'; // Para converter JSON em Map/List e vice-versa
 import 'package:amigo_secreto/api_key.dart'; // Onde está armazenada a chave de autenticação do GitHub (githubApiKey)
 
+
 class AccountServices {
   // Cria um controlador de stream que vai emitir mensagens (Strings)
   StreamController<String> _streamController = StreamController<String>();
@@ -36,7 +37,7 @@ class AccountServices {
     return listAccounts;
   }
 
-  addAccount(Account account) async {
+  dynamic addAccount(Account account) async {
     // Busca os dados existentes no Gist (lista de contas)
     List<Account> listAccounts = await getAll();
 
@@ -80,7 +81,7 @@ List<Map<String, dynamic>> listContent = [];
       );
     }
   }
-  deleteAccount(String id) async {
+  dynamic deleteAccount(String id) async {
     // Busca os dados existentes no Gist (lista de contas)
     List<Account> listAccounts = await getAll();
 
@@ -116,11 +117,11 @@ List<Map<String, dynamic>> listContent = [];
     // Se o status code começar com "2" (ex: 200, 201), significa sucesso
     if (response.statusCode.toString()[0] == "2") {
       _streamController.add(
-        "${DateTime.now()} - Dados deletados (ID: ${id})",
+        "${DateTime.now()} - Dados deletados (ID: $id)",
       );
     } else {
       _streamController.add(
-        "${DateTime.now()} - Erro ao deletar dados (status: ${response.statusCode} ID: ${id})",
+        "${DateTime.now()} - Erro ao deletar dados (status: ${response.statusCode} ID: $id)",
       );
     }
 }
