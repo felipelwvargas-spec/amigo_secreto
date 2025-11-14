@@ -23,7 +23,7 @@ class TransactionService {
   final AccountService _accountService = AccountService();
 
   // URL do Gist onde estão armazenadas as transações e contas.
-  String url = "https://api.github.com/gists/413c0aefe6c6abc464581c29029c8ace";
+  String url = "https://api.github.com/gists/b49d630bd597c03ed8b9b90d498e7f5a";
 
   /// Realiza uma transação entre duas contas identificadas por `idSender`
   /// e `idReceiver`, transferindo o valor `amount`.

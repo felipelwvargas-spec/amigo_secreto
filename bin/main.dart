@@ -4,7 +4,7 @@
 // viria de uma camada de UI ou de uma lógica de negócio com dados
 // fornecidos pelo usuário.
 
-// import 'package:amigo_secreto/screens/account_screens.dart';
+ import 'package:amigo_secreto/screens/account_screens.dart';
 import 'package:amigo_secreto/services/transaction_service.dart';
 
 void main() {
@@ -12,18 +12,20 @@ void main() {
   // - `idSender` e `idReceiver` representam os identificadores das contas.
   // - `amount` é o valor a ser transferido.
   // Em produção, não use IDs hardcoded; obtenha-os via input ou do seu DB.
+
   TransactionService().makeTransaction(
     idSender: "ID001",
     idReceiver: "ID002",
-    amount: 5,
+    amount: 8,
   );
+
 
   // Código comentado: exemplo de como iniciar a interface de chat/CLI
   // para gerenciar contas interativamente. Descomente se quiser usar.
   // AccountScreen accountScreen = AccountScreen();
   // accountScreen.initializeStream();
   // accountScreen.runChatBot();
-}
+
 
 // Abaixo existem blocos de código antigos/commentados que eram usados
 // para testes e demonstrações de fluxo (funções aninhadas, prints etc.).
@@ -48,3 +50,4 @@ void main() {
 //   }
 //   print("Finalizou a Função 02");
 // }
+}

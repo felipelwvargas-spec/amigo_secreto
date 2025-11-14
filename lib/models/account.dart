@@ -82,7 +82,7 @@ class Account {
   String toString() {
     return '\nConta $id\n$name $lastName\nSaldo: $balance\n';
   }
-
+ /// Comparação de igualdade baseada nos campos da conta
   @override
   bool operator ==(covariant Account other) {
     if (identical(this, other)) return true;

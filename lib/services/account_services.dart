@@ -17,7 +17,7 @@ class AccountService {
   Stream<String> get streamInfos => _streamController.stream;
 
   // URL do Gist que armazena os dados das contas (arquivo `accounts.json`).
-  String url = "https://api.github.com/gists/413c0aefe6c6abc464581c29029c8ace";
+  String url = "https://api.github.com/gists/b49d630bd597c03ed8b9b90d498e7f5a";
 
   /// Recupera todas as contas persistidas no Gist.
   ///
