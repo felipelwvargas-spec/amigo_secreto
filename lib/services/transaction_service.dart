@@ -9,6 +9,7 @@
 // - Validações simples de existência de conta e saldo são aplicadas.
 // - Impostos são calculados via `calculateTaxesByAccount` presente em
 //   `helper_taxes.dart`.
+import 'package:amigo_secreto/exceptions/transaction_exceptions.dart';
 import 'package:amigo_secreto/helpers/helper_taxes.dart';
 import 'package:amigo_secreto/models/account.dart';
 import 'package:amigo_secreto/services/account_services.dart';
@@ -47,7 +48,7 @@ class TransactionService {
     if (listAccounts.where((acc) => acc.id == idSender).isEmpty) {
       // Retorna null em caso de erro/validação falha (poderíamos lançar uma
       // exceção ou retornar um Result/Either para tratamento mais rico)
-      return null;
+      throw SenderNotExistException();
     }
 
     // Obtém o objeto da conta do remetente
@@ -57,7 +58,7 @@ class TransactionService {
 
     // Verifica existência do destinatário
     if (listAccounts.where((acc) => acc.id == idReceiver).isEmpty) {
-      return null;
+      throw ReceiverNotExistException();
     }
 
     // Obtém o objeto da conta do destinatário
@@ -73,7 +74,7 @@ class TransactionService {
 
     // Validação de saldo: o remetente precisa ter saldo >= amount + taxes
     if (senderAccount.balance < amount + taxes) {
-      return null;
+      throw InsufficientFundsException();
     }
 
     // Atualiza os saldos localmente (subtrai do remetente, adiciona ao receptor)
