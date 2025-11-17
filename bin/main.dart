@@ -4,8 +4,8 @@
 // viria de uma camada de UI ou de uma lógica de negócio com dados
 // fornecidos pelo usuário.
 
- import 'package:amigo_secreto/screens/account_screens.dart';
-import 'package:amigo_secreto/services/transaction_service.dart';
+ // import 'package:amigo_secreto/screens/account_screens.dart';
+ import 'package:amigo_secreto/services/transaction_service.dart';
 
 void main() {
   // Exemplo de uso rápido: cria uma transação entre duas contas (IDs).
