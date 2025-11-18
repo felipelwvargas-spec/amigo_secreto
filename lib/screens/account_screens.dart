@@ -2,18 +2,17 @@ import 'dart:io';
 
 import 'package:amigo_secreto/services/account_services.dart';
 import 'package:http/http.dart';
-
+import 'package:amigo_secreto/exceptions/transaction_exceptions.dart';
+import 'package:amigo_secreto/services/transaction_service.dart';
 import '../models/account.dart';
 
 class AccountScreen {
   final AccountService _accountService = AccountService();
 
   void initializeStream() {
-    _accountService.streamInfos.listen(
-      (event) {
-        print(event);
-      },
-    );
+    _accountService.streamInfos.listen((event) {
+      print(event);
+    });
   }
 
   void runChatBot() async {
@@ -25,7 +24,8 @@ class AccountScreen {
       print("Como eu posso te ajudar? (digite o número desejado)");
       print("1 - 👀 Ver todas sua contas.");
       print("2 - ➕ Adicionar nova conta.");
-      print("3 - Sair\n");
+      print("3 - 💱 Fazer transferência.");
+      print("0 - Sair\n");
 
       String? input = stdin.readLineSync();
 
@@ -42,6 +42,11 @@ class AccountScreen {
               break;
             }
           case "3":
+            {
+              await _addTransactionExample();
+              break;
+            }
+          case "0":
             {
               isRunning = false;
               print("Te vejo na próxima. 👋");
@@ -89,5 +94,19 @@ class AccountScreen {
     } on Exception {
       print("Ocorreu um problema ao tentar adicionar.");
     }
+  }
+
+  _addTransactionExample() async {
+    TransactionService()
+        // quero colocar parâmetros recebidos do usuário
+        .makeTransaction(idSender: "ID001", idReceiver: "ID002", amount: 5000)
+        .catchError((e) {
+          print(e.message);
+          print(
+            "${e.cause.name}Possui saldo ${e.cause.balance}"
+            " que é menor que ${(e.amount + e.taxes)}",
+          );
+        }, test: (error) => error is InsufficientFundsException)
+        .then((value) {});
   }
 }

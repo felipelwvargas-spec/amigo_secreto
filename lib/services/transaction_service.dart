@@ -36,7 +36,7 @@ class TransactionService {
   /// 4. Verifica se o remetente tem saldo suficiente (valor + impostos).
   /// 5. Atualiza saldos localmente e persiste as contas.
   /// 6. Cria e persiste o registro da transação.
-  makeTransaction({
+  Future<void> makeTransaction({
     required String idSender,
     required String idReceiver,
     required double amount,
@@ -74,7 +74,11 @@ class TransactionService {
 
     // Validação de saldo: o remetente precisa ter saldo >= amount + taxes
     if (senderAccount.balance < amount + taxes) {
-      throw InsufficientFundsException();
+      throw InsufficientFundsException(
+        cause: senderAccount,
+        amount: amount,
+        taxes: taxes,
+      );
     }
 
     // Atualiza os saldos localmente (subtrai do remetente, adiciona ao receptor)
